@@ -27,6 +27,20 @@ const dataSchema = new mongoose.Schema({
 
 const Company= mongoose.model("Company", dataSchema);
 
+const shopSchema = new mongoose.Schema({
+    firstName : String,
+    lastName : String,
+    shopName: String,
+    shopDescription: String,
+    shopLocation : String,
+    shopPinCode : Number,
+    userEmail : String,
+    userPassword : String
+
+});
+
+const Shop = mongoose.model("Shop", shopSchema);
+
 // const company1 = new Company({
 //     name: "Apple",
 //     description: "Good Company"
@@ -106,6 +120,45 @@ app.post("/", (req, res)=> {
 
 app.get("/about", (req, res)=> {
     res.render("about");
+})
+
+app.get("/contact", (req, res) => {
+    res.render("contact");
+})
+
+app.get("/shops", (req, res)=> {
+    res.render("shops");
+});
+
+
+app.post("/shops", (req, res)=> {
+    const fName = req.body.firstName;
+    const lName = req.body.lastName;
+    const sName = req.body.shopName;
+    const sDescription = req.body.shopDescription
+    const locName = req.body.locationName;
+    const pinCode = req.body.pinCode;
+    const email = req.body.userEmail;
+    const password = req.body.userPassword;
+    console.log(sName, sDescription, email, password);
+
+
+    const shop = new Shop({
+        firstName : fName,
+        lastName : lName,
+        shopName: sName,
+        shopDescription: sDescription,
+        shopLocation : locName,
+        shopPinCode : pinCode,
+        userEmail : email,
+        userPassword : password
+
+    });
+
+    shop.save();
+
+    res.render("success");
+    
 })
 
 let port = process.env.PORT;
