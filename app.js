@@ -4,7 +4,7 @@ const request = require("request");
 const https = require("https");
 const mongoose = require("mongoose");
 const ejs = require("ejs");
-const port = 3000;
+
 var _ = require('lodash');
 
 
@@ -103,6 +103,12 @@ app.post("/", (req, res)=> {
 //     })
     
 // });
+
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
+
 
 app.listen(port, ()=> {
     console.log("Server is up and running");
