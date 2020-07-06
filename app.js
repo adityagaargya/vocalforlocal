@@ -135,6 +135,7 @@ app.post("/shops", (req, res)=> {
     const fName = req.body.firstName;
     const lName = req.body.lastName;
     const sName = req.body.shopName;
+    const sNameLower = sName.toLowerCase();
     const sDescription = req.body.shopDescription
     const locName = req.body.locationName;
     const pinCode = req.body.pinCode;
@@ -146,7 +147,7 @@ app.post("/shops", (req, res)=> {
     const shop = new Shop({
         firstName : fName,
         lastName : lName,
-        shopName: sName,
+        shopName: sNameLower,
         shopDescription: sDescription,
         shopLocation : locName,
         shopPinCode : pinCode,
@@ -155,9 +156,30 @@ app.post("/shops", (req, res)=> {
 
     });
 
+
+
     shop.save();
 
     res.render("success");
+    
+});
+
+app.get("/search", (req, res)=> {
+    res.render("search");
+});
+
+app.post("/search", (req, res)=> {
+    const search = req.body.shopName;
+    const searchLower = search.toLowerCase();
+    console.log(searchLower);
+    Shop.findOne({shopName: searchLower}, function(err, foundItem) {
+        if(!foundItem) {
+            res.render("notfoundshop");
+        }
+        else {
+            res.render("searchresult", {shopName: search, fName : foundItem.firstName, shopDescription : foundItem.shopDescription, email : foundItem.userEmail, shopLocation : foundItem.shopLocation })
+        }
+    })
     
 })
 
