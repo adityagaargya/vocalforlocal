@@ -12,7 +12,9 @@ const app = express();
 
 app.use(bodyParser.urlencoded({extended: true}));
 
-mongoose.connect("mongodb+srv://admin-aditya:vi19bh20@cluster0.szyl8.mongodb.net/miniprojectDB", {useNewUrlParser: true, useUnifiedTopology: true});
+
+// Connect to MongoDB 
+mongoose.connect("", {useNewUrlParser: true, useUnifiedTopology: true});
 
 app.use(express.static("public"));
 
@@ -24,6 +26,7 @@ const dataSchema = new mongoose.Schema({
     name: String,
     description: String
 });
+
 
 const Company= mongoose.model("Company", dataSchema);
 
